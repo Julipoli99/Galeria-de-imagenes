@@ -1,0 +1,27 @@
+<%- include("partials/head.ejs")%>
+
+<body>
+
+  <%- include("partials/navbar.ejs")%>
+
+    <div class="container p-4">
+
+        <div class="row">
+              <div class="col-md-4 offset-md-4 card">
+                <img src="<%=imagen.url%>" class="card-img-top" alt="...">
+                <div class="card-body">
+                  
+                  <h5 class="card-title"><%=imagen.Titulo%></h5>
+                  <p class="card-text"><%=imagen.Description%></p>
+
+                  <form action="/image/<%=imagen.id%>/delete" method="post">
+                  <button type="" class="btn btn-danger btn-block" onclick="return confirm('¿Estas seguro de que quieres borrar esta imagen?')">Borrar Imagen</button>
+                  </form>
+                </div>
+              </div>
+
+         
+        </div>
+      </div>
+</body>
+</html>
