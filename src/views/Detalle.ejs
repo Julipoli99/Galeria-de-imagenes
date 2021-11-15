@@ -1,5 +1,7 @@
 <%- include("partials/head.ejs")%>
 
+<title>imagen: <%=imagen.Titulo%></title>
+
 <body>
 
   <%- include("partials/navbar.ejs")%>
@@ -8,7 +10,7 @@
 
         <div class="row">
               <div class="col-md-4 offset-md-4 card">
-                <img src="<%=imagen.url%>" class="card-img-top" alt="...">
+                <img src="<%=imagen.url%>" class="card-img-top mt-2 alt="...">
                 <div class="card-body">
                   
                   <h5 class="card-title"><%=imagen.Titulo%></h5>
@@ -16,7 +18,9 @@
 
                   <form action="/image/<%=imagen.id%>/delete" method="post">
                   <button type="" class="btn btn-danger btn-block" onclick="return confirm('¿Estas seguro de que quieres borrar esta imagen?')">Borrar Imagen</button>
+                  
                   </form>
+                  <a href="/edicion/<%=imagen.id%>" style="text-decoration: none;"><button class="btn btn-dark btn-block mt-2">Editar imagen</button></a>
                 </div>
               </div>
 

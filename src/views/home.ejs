@@ -1,24 +1,48 @@
 <%- include("partials/head.ejs")%>
 
+<title>Nueva imagen</title>
+
 <body>
 
    <%- include("partials/navbar.ejs")%>
 
 
 
-    <form action="/subido" method="post" enctype="multipart/form-data">
+    <form action="/" method="post" enctype="multipart/form-data">
+
+      
+      
+
         <div class="container p-4" style="background-color: white;">
             <div class="form-group">
+              
+      
                 <label for="formGroupExampleInput">Titulo</label>
-                <input type="text" class="form-control" id="formGroupExampleInput" name="title">
+                <% if (locals.errors && errors.title) { %> 
+                  
+                  <p class="text-danger"><%= errors.title.msg %></p>
+                                
+              <% } %>
+                <input type="text" class="form-control" id="formGroupExampleInput" name="title" value="<%= locals.old && old.title ? old.title: '' %>">
               </div>
               <div class="form-group">
+                
                 <label for="formGroupExampleInput2">Ingresa una imagen</label>
+                <% if (locals.errors && errors.image) { %> 
+                  
+                  <p class="text-danger"><%= errors.image.msg %></p>
+                                
+              <% } %>
                 <input type="file" class="form-control" id="formGroupExampleInput2" name = "image">
               </div>
               <div class="form-group">
                 <label for="formGroupExampleInput2">Descripcion</label>
-                <textarea name="description" id="" class="form-control"></textarea>
+                <% if (locals.errors && errors.description) { %> 
+                  
+                  <p class="text-danger"><%= errors.description.msg %></p>
+                                
+              <% } %>
+                <textarea name="description" id="" class="form-control"><%= locals.old && old.description ? old.description: '' %></textarea>
                 <button type="submit" class="btn btn-primary mt-2">Subir imagen</button>
               </div>
         </div>
