@@ -8,7 +8,7 @@
 
 
 
-    <form action="/" method="post" enctype="multipart/form-data">
+    <form action="/" method="post" enctype="multipart/form-data" class = "Formulario">
 
       
       
@@ -23,7 +23,8 @@
                   <p class="text-danger"><%= errors.title.msg %></p>
                                 
               <% } %>
-                <input type="text" class="form-control" id="formGroupExampleInput" name="title" value="<%= locals.old && old.title ? old.title: '' %>">
+              <p id="errorTitulo"></p>
+                <input type="text" class="form-control" id="titulo" name="title" value="<%= locals.old && old.title ? old.title: '' %>">
               </div>
               <div class="form-group">
                 
@@ -33,7 +34,8 @@
                   <p class="text-danger"><%= errors.image.msg %></p>
                                 
               <% } %>
-                <input type="file" class="form-control" id="formGroupExampleInput2" name = "image">
+              <p id="errorImagen"></p>
+                <input type="file" class="form-control" id="imagen" name = "image">
               </div>
               <div class="form-group">
                 <label for="formGroupExampleInput2">Descripcion</label>
@@ -42,11 +44,14 @@
                   <p class="text-danger"><%= errors.description.msg %></p>
                                 
               <% } %>
-                <textarea name="description" id="" class="form-control"><%= locals.old && old.description ? old.description: '' %></textarea>
+              <p id="errorDescripcion"></p>
+                <textarea name="description" id="descripcion" class="form-control"><%= locals.old && old.description ? old.description: '' %></textarea>
                 <button type="submit" class="btn btn-primary mt-2">Subir imagen</button>
               </div>
         </div>
         
       </form>
+
+      <script src="../js/formNewImage.js"></script>
 </body>
 </html>
