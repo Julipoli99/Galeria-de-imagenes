@@ -27,6 +27,21 @@ const validatedSubmit = [
 ]
 
 
+const validatedEdit = [
+    body("title").notEmpty().withMessage("Completa este campo"),
+    body("description").notEmpty().withMessage("Escribe una descripción para la imagen"),
+    body("image").optional().custom((value, {req}) => {
+        let file = req.file;
+        let acceptedExtensions = ["jpg", "jpeg", "png", "gif"];
+        
+        if(!file){
+            throw new Error("Tienes que ingresar una imagen")
+        }
+        return true;
+    })
+]
+
+
 
 
 router.get("/", (req, res) => {
@@ -98,22 +113,35 @@ router.get("/edicion/:id",  (req, res) => {
         })
 })
 
-router.post("/edicion/:id", async(req, res) => {
-    let imagenEncontrada = await db.Imagen.findByPk(req.params.id);
+router.post("/edicion/:id", validatedEdit, async(req, res) => {
+    
 
-     await db.Imagen.update({
-        url: "/img/" + req.file.filename,
-        Titulo: req.body.title,
-        Description: req.body.description
-    }, {
-        where: {
-            id: req.params.id
-        }
-    })
+    let resultsValidations = validationResult(req);
+    if (resultsValidations.errors.length > 0){
+        return res.render("edicion", {
+            errors: resultsValidations.mapped(),
+            old: req.body
+        })
+    }
 
-    await unlink(path.resolve("./src/public" + imagenEncontrada.url))
+    else{
+        let imagenEncontrada = await db.Imagen.findByPk(req.params.id);
+        await db.Imagen.update({
+            url: "/img/" + req.file.filename,
+            Titulo: req.body.title,
+            Description: req.body.description
+        }, {
+            where: {
+                id: req.params.id
+            }
+        })
+    
+        await unlink(path.resolve("./src/public" + imagenEncontrada.url))
+    
+        res.redirect("/subido")
+    }
 
-    res.redirect("/subido")
+    
 })
 
 module.exports = router;

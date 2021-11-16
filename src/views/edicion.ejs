@@ -4,15 +4,29 @@
     
     <%- include("partials/navbar.ejs")%>
 
-    <form action="/edicion/<%=imagen.id%>" method="post" enctype="multipart/form-data">
+    <form action="/edicion/<%=imagen.id%>" method="post" enctype="multipart/form-data" class="formulario">
         <div class="container p-4" style="background-color: white;">
             <div class="form-group">
                 <label for="formGroupExampleInput">Titulo</label>
-                <input type="text" class="form-control" id="formGroupExampleInput" name="title" value="<%=imagen.Titulo%>">
+
+                <% if (locals.errors && errors.title) { %> 
+                  
+                  <p class="text-danger"><%= errors.title.msg %></p>
+                                
+              <% } %>
+              <p id="errorTituloP"></p>
+                <input type="text" class="form-control" id="titulo" name="title" value="<%=imagen.Titulo%>">
               </div>
               <div class="form-group">
                 <label for="formGroupExampleInput2">Ingresa una imagen</label>
-                <input type="file" class="form-control" id="formGroupExampleInput2" name = "image" [value] = "<%=imagen.url%>">
+
+                <% if (locals.errors && errors.image) { %> 
+                  
+                  <p class="text-danger"><%= errors.image.msg %></p>
+                                
+              <% } %>
+              <p id="errorImagenP"></p>
+                <input type="file" class="form-control" id="imagen" name = "image" [value] = "<%=imagen.url%>">
                 <div class="card mt-2" style="width: 18rem;">
                     <img class="card-img-top" src="<%=imagen.url%>" alt="Card image cap">
                     
@@ -20,10 +34,15 @@
               </div>
               <div class="form-group">
                 <label for="formGroupExampleInput2">Descripcion</label>
-                <textarea name="description" id="" class="form-control"><%=imagen.Description%></textarea>
+                <p id="errorDescripcionP"></p>
+                <textarea name="description" id="descripcion" class="form-control"><%=imagen.Description%></textarea>
                 <button type="submit" class="btn btn-success btn-block mt-2">Editar</button>
               </div>
+
+              <a href="/subido"><button type="button" class="btn btn-primary">Volver</button></a>
         </div>
-        
       </form>
+      
+
+      <script src="../js/formEditImage.js"></script>
 </body>
