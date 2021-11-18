@@ -1,0 +1,40 @@
+<%- include("partials/head.html")%>
+
+<body class="login">
+    <%- include("partials/navbar.html")%>
+
+    <form action="/login" method="post" class="formulario">
+
+        <h1>Ingresa</h1>
+
+        
+
+        <div class="contenedor">
+
+            <% if(locals.errors && errors.contraseña) { %>
+
+                <p style="color:crimson; font-size: 20px;"><%=errors.contraseña.msg%></p>
+    
+            <% } %>
+
+            <p id="errorEmailP" style="color: crimson;"></p>
+        <div class="contenedor-input">
+            <i class="fas fa-envelope icon"></i>
+            <input type="text" name="email" id="email" placeholder="Introduce tu email" value="<%= locals.old && old.email ? old.email : '' %>"><span id="iconoX"></span>
+        </div>
+
+        <p id="errorPassP" style="color: crimson;"></p>
+        <div class="contenedor-input">
+            <i class="fas fa-key icon"></i>
+              <input type="password" name="password" id="password" placeholder="Introduce tu contraseña"><span id="iconoX2"></span>
+        </div>
+
+        <input type="submit" name="" id="boton" value="Ingresa" class="button">
+
+        <p>¿No tienes una cuenta? <a href="/registro" class ="link">Registrate</a></p>
+
+        </div>
+    </form>
+
+    <script src="../js/formLogin.js"></script>
+</body>

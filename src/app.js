@@ -6,6 +6,12 @@ const {uuid} = require("uuidv4")
 const path = require("path");
 const port = 3000;
 
+const db = require("../database/models");
+const {sequelize, Sequelize} = require("../database/models");
+const op = Sequelize.Op;
+
+const session = require("express-session");
+
 
 
 //Settings
@@ -14,6 +20,31 @@ app.listen(port, () => {
 });
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"))
+
+app.engine("html", require("ejs").renderFile);
+app.set("view engine", "html");
+
+app.use(express.urlencoded({ extended: false }));
+
+app.use(session({
+    secret: "this is my secret...",
+    resave: false,
+    saveUninitialized: false
+}));
+
+
+app.use((req, res, next) => {
+    res.locals.isLogged = false;
+    
+    db.Usuario.findAll()
+        .then(function(usuario){
+            if(req.session && req.session.usuarioLogueado){
+                res.locals.isLogged = true;
+                res.locals.usuarioLogueado = req.session.usuarioLogueado;
+            }
+            next();
+        })
+})
 
 
 

@@ -7,6 +7,7 @@ const path = require("path");
 const {unlink} = require("fs-extra");
 const { nextTick } = require("process");
 const {body, validationResult} = require("express-validator");
+const bcryptjs = require("bcryptjs");
 
 
 //VALIDATIONS//
@@ -41,6 +42,11 @@ const validatedEdit = [
     })
 ]
 
+const validatedLogin = [
+    body("email").notEmpty().withMessage("ingresa un email").bail().isEmail().withMessage("Debes ingresar un email valido"),
+    body("")
+]
+
 
 
 
@@ -66,6 +72,7 @@ else{
     })
     res.redirect("/subido")
     console.log(req.file)
+    
 }
 })
 
@@ -142,6 +149,92 @@ router.post("/edicion/:id", validatedEdit, async(req, res) => {
     }
 
     
+})
+
+router.get("/registro", (req, res) => {
+    res.render("registro")
+})
+
+router.post("/registro", (req, res) => {
+
+    let encriptedPass = bcryptjs.hashSync(req.body.password, 10);
+   
+    let NewUser =   {
+        Nombre: req.body.nombre,
+        Email: req.body.email,
+        Password: encriptedPass
+    }
+
+    db.Usuario.create(NewUser);
+
+    res.redirect("/login")
+    
+})
+
+
+
+router.get("/login", (req, res) => {
+    res.render("login")
+})
+
+router.post("/login", (req, res) => {
+    let errors = validationResult(req);
+
+    if(errors.isEmpty()){
+
+        db.Usuario.findAll()
+            .then(function (usuarios) {
+                let emailBuscado = req.body.email;
+                let passwordIngresada = req.body.password;
+
+                let usuarioEncontrado;
+                let emailEncontrado;
+
+                for (let i of usuarios) {
+                    if (emailBuscado == i.Email) {
+                        emailEncontrado = true;
+
+                        if (bcryptjs.compareSync(passwordIngresada, i.Password)) {
+                            usuarioEncontrado = i;
+                            break;
+                        }
+                    }
+                }
+                if (usuarioEncontrado) {
+                    req.session.usuarioLogueado = usuarioEncontrado; //Guardo el usuario en session
+
+                    res.redirect("/")
+                }
+
+                else {
+                    if (emailEncontrado == true || !usuarioEncontrado) {
+                        res.render("login", {
+                            errors: {
+                                contraseña: {
+                                    msg: 'Credenciales invalidas'
+                                }
+                            },
+                            old: req.body
+                        }); // Email Correcto pero Password Incorrecto       
+                    }
+
+                }
+            })
+
+    }
+
+    else {
+        if (errors.errors.length > 0) {
+            res.render("login", { errors: errors.mapped() })
+        }
+    }
+    //FALTA AGREGAR LAS VALIDACIONES DEL BACKEND//
+})
+
+
+router.get("/logout", (req, res) => {
+    req.session.destroy();
+    res.redirect("/")
 })
 
 module.exports = router;

@@ -1,5 +1,5 @@
 window.addEventListener("load", function(){
-    let formulario = document.querySelector(".formulario");
+    let formulario = document.querySelector(".formulario-edicion");
     let titulo = document.getElementById("titulo");
     let imagen = document.getElementById("imagen");
     let descripcion = document.getElementById("descripcion");

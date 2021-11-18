@@ -3,3 +3,115 @@ body{
 background: linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(0,212,255,1) 0%, rgba(2,2,93,1) 41%, rgba(5,2,93,1) 51%, rgba(12,2,93,1) 57%);
 }
 
+.registro{
+    background-image:url("/img/imagen-fondo-registro.png");
+    background-repeat: no-repeat;
+    background-size: cover;
+    font-family: Arial, Helvetica, sans-serif;
+    margin: 0;
+}
+
+.login{
+    background-image: url("https://2.bp.blogspot.com/-V9BleHrH9lw/WzXUgo_8PlI/AAAAAAAAHLM/m5zz6jOOsuAbgXqMoLNOpYhEAT4tofiPACLcBGAs/s1600/pinterest-dlya-biznesa-pins.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    font-family: Arial, Helvetica, sans-serif;
+    margin: 0;
+}
+
+.contenedor{
+    width: 100%;
+    padding: 15px;
+}
+
+
+.formulario{
+    background-color: white;
+    opacity: .8;
+    margin-top: 150px;
+    padding: 3px;
+}
+
+.formulario:hover{
+    opacity: 1;
+}
+
+h1{
+    text-align: center;
+    color: #1a2537;
+    font-size: 40px;
+}
+
+
+.formulario
+input[type = "text"],
+input[type = "password"]{
+    border: solid blue 1px;
+    font-size: 20px;
+    width: 82%;
+    padding: 10px;
+    border: none;
+}
+
+.icon{
+    min-width: 50px;
+    text-align: center;
+    color: #999;
+}
+
+
+.contenedor-input{
+    margin-bottom: 15px;
+    border: solid 1px #aaa;
+}
+
+
+.button{
+    border: none;
+    width: 100%;
+    color: white;
+    font-size: 20px;
+    background-color: #1a2537;
+    padding: 15px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+
+.button:hover{
+    background-color: cadetblue;
+}
+
+.formulario p{
+    text-align: center;
+}
+
+.link{
+    text-decoration: none;
+    color: #1a2537;
+    font-weight: 600;
+}
+
+.link:hover{
+    color: cadetblue;
+}
+
+
+
+@media(min-width: 768px){
+    .formulario{
+        margin: auto;
+        width: 500px;
+        margin-top: 100px;
+        border-radius: 2%;
+    }
+
+    
+}
+
+
+@media(max-width: 800px){
+    span{
+        display: none;
+    }
+}

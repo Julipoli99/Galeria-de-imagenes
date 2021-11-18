@@ -1,0 +1,48 @@
+<%- include("partials/head.html")%>
+
+<body class="registro">
+    <%- include("partials/navbar.html")%>
+
+    <form action="/registro" method="post" class="formulario">
+
+        <h1>Registrate</h1>
+
+        <div class="contenedor">
+
+            <p id="errorNombreP" style="color: crimson;"></p>
+            
+            <div class="contenedor-input">
+                <i class="fas fa-user icon"></i>
+                <input type="text" name="nombre" id="nombre" placeholder="Introduce tu nombre"><span id="iconoX"></span>
+            </div>
+
+
+            <p id="errorEmailP" style="color: crimson;"></p>
+            <div class="contenedor-input">
+                <i class="fas fa-envelope icon"></i>
+                  <input type="text" name="email" id="email" placeholder="Introduce tu email"><span id="iconoX2"></span>
+            </div>
+
+            
+
+
+            <p id="errorPassP" style="color: crimson;"></p>
+            <div class="contenedor-input">
+                <i class="fas fa-key icon"></i>
+                <input type="password" name="password" id="password" placeholder="Introduce una contraseña"><span id="iconoX3"></span>
+            </div>
+
+            
+            <button type="submit" name="" id="boton" class="button">Registrate</button>
+
+            <p>Al registrarte, aceptas nuestras Condiciones de uso y Política de privacidad.</p>
+
+            <p>¿Ya tienes una cuenta? <a class="link" href="/login">Iniciar Sesión</a></p>
+
+
+        </div>
+
+    </form>
+
+    <script src="../js/formRegister.js"></script>
+</body>

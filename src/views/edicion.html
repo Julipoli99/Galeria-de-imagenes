@@ -1,10 +1,10 @@
-<%- include("partials/head") %>
+<%- include("partials/head.html") %>
 
 <body>
     
-    <%- include("partials/navbar.ejs")%>
+    <%- include("partials/navbar.html")%>
 
-    <form action="/edicion/<%=imagen.id%>" method="post" enctype="multipart/form-data" class="formulario">
+    <form action="/edicion/<%=imagen.id%>" method="post" enctype="multipart/form-data" class="formulario-edicion">
         <div class="container p-4" style="background-color: white;">
             <div class="form-group">
                 <label for="formGroupExampleInput">Titulo</label>
