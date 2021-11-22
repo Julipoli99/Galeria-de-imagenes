@@ -65,10 +65,13 @@ router.post("/", validatedSubmit, async(req, res) => {
         })
     }
 else{
+    
+
     await db.Imagen.create({
         url: "/img/" + req.file.filename,
         Titulo: req.body.title,
-        Description: req.body.description
+        Description: req.body.description,
+        id_usuario: req.session.usuarioLogueado.id
     })
     res.redirect("/subido")
     console.log(req.file)

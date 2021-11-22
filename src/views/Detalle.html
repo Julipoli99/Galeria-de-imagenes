@@ -16,11 +16,28 @@
                   <h5 class="card-title"><%=imagen.Titulo%></h5>
                   <p class="card-text"><%=imagen.Description%></p>
 
-                  <form action="/image/<%=imagen.id%>/delete" method="post">
-                  <button type="" class="btn btn-danger btn-block" onclick="return confirm('¿Estas seguro de que quieres borrar esta imagen?')">Borrar Imagen</button>
+                  <% if (locals.usuarioLogueado) { %>
+                     <% if (imagen.id_usuario == locals.usuarioLogueado.id) { %>
+                      <form action="/image/<%=imagen.id%>/delete" method="post">
+                        <button type="" class="btn btn-danger btn-block" onclick="return confirm('¿Estas seguro de que quieres borrar esta imagen?')">Borrar Imagen</button>
+                        
+                        </form>
+
+                        <a href="/edicion/<%=imagen.id%>" style="text-decoration: none;"><button class="btn btn-dark btn-block mt-2">Editar imagen</button></a>
+
+                        <a href="/subido" style="text-decoration: none;"><button type="button" class="btn btn-primary btn-block mt-2">Volver</button></a>
+                    <% } else { %>
+                      <a href="/subido" style="text-decoration: none;"><button type="button" class="btn btn-primary btn-block">Volver</button></a>
+                      <% } %>
+
+                  <% } %>
+
+                  <% if (!locals.usuarioLogueado) { %>
+                    <a href="/subido" style="text-decoration: none;"><button type="button" class="btn btn-primary btn-block">Volver</button></a>
+
+                  <% } %>
                   
-                  </form>
-                  <a href="/edicion/<%=imagen.id%>" style="text-decoration: none;"><button class="btn btn-dark btn-block mt-2">Editar imagen</button></a>
+                  
                 </div>
               </div>
 
