@@ -15,7 +15,9 @@
 
         <div class="container p-4" style="background-color: white;">
             <div class="form-group">
-              
+              <% if(locals.error && error.deslogueado) { %>
+                <p style="color: crimson; text-align: center;"><%=error.deslogueado.msg%></p>
+              <% } %>
       
                 <label for="formGroupExampleInput">Titulo</label>
                 <% if (locals.errors && errors.title) { %> 

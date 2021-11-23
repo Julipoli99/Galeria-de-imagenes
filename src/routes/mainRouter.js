@@ -66,15 +66,29 @@ router.post("/", validatedSubmit, async(req, res) => {
     }
 else{
     
+    if(req.session.usuarioLogueado){
+        await db.Imagen.create({
+            url: "/img/" + req.file.filename,
+            Titulo: req.body.title,
+            Description: req.body.description,
+            id_usuario: req.session.usuarioLogueado.id
+        })
+        res.redirect("/subido")
+       // console.log(req.file)    
+    }
 
-    await db.Imagen.create({
-        url: "/img/" + req.file.filename,
-        Titulo: req.body.title,
-        Description: req.body.description,
-        id_usuario: req.session.usuarioLogueado.id
-    })
-    res.redirect("/subido")
-    console.log(req.file)
+    if (!req.session.usuarioLogueado){
+        unlink(path.resolve("./src/public/img/" + req.file.filename))
+        return res.render("home", {
+            error: {
+                deslogueado: {
+                    msg: "Debes estar logueado para subir una imagen"
+                }
+            }
+        })
+        
+    }
+    
     
 }
 })
@@ -136,10 +150,13 @@ router.post("/edicion/:id", validatedEdit, async(req, res) => {
 
     else{
         let imagenEncontrada = await db.Imagen.findByPk(req.params.id);
+        let usuarioEdita = await db.Usuario.findAll();
+
         await db.Imagen.update({
             url: "/img/" + req.file.filename,
             Titulo: req.body.title,
-            Description: req.body.description
+            Description: req.body.description,
+            id_usuario: usuarioEdita.id
         }, {
             where: {
                 id: req.params.id

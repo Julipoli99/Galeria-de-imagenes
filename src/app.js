@@ -11,6 +11,7 @@ const {sequelize, Sequelize} = require("../database/models");
 const op = Sequelize.Op;
 
 const session = require("express-session");
+const router = require("./routes/mainRouter");
 
 
 
