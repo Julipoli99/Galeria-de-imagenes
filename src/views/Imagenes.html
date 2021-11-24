@@ -18,6 +18,14 @@
                 <img src="<%=imagen.url%>" class="card-img-top" alt="...">
                 <h5 class="card-title"><%=imagen.Titulo%></h5>
                 <p class="card-text"><%=imagen.Description%></p>
+                <p class="card-text" style="color: green;"><%= format(imagen.created_at)%></p>
+                <% if(locals.usuarioLogueado){ %> 
+                <% if(imagen.id_usuario == locals.usuarioLogueado.id) { %>
+                  <p class="card-text" style="color: crimson;">Este articulo te pertenece</p>
+                <% } %>
+                <% } %>
+                  
+                
                 <a href="/image/<%=imagen.id%>"><button type="" class="btn btn-primary">Ver imagen</button></a>
               </div>
             </div>

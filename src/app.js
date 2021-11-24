@@ -13,6 +13,8 @@ const op = Sequelize.Op;
 const session = require("express-session");
 const router = require("./routes/mainRouter");
 
+const {format} = require("timeago.js");
+
 
 
 //Settings
@@ -76,6 +78,13 @@ app.use(multer({
         }
     }
 }).single("image"))
+
+
+
+app.use((req, res, next) => {
+    app.locals.format = format
+    next()
+})
 
 
 

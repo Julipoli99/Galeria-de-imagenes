@@ -18,7 +18,14 @@ module.exports = (sequelize, dataTypes) => {
         Description: {
             type: dataTypes.STRING,
             notNull: true
+        },
+        created_at: {
+            type: dataTypes.DATE
+        },
+        updated_at: {
+            type: dataTypes.DATE
         }
+        
     }
     let config = {
         tableName: "imagen",

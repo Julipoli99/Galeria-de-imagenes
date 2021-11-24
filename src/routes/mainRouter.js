@@ -71,10 +71,11 @@ else{
             url: "/img/" + req.file.filename,
             Titulo: req.body.title,
             Description: req.body.description,
-            id_usuario: req.session.usuarioLogueado.id
+            id_usuario: req.session.usuarioLogueado.id,
+            created_at: new Date()
         })
         res.redirect("/subido")
-       // console.log(req.file)    
+        console.log(req.file)    
     }
 
     if (!req.session.usuarioLogueado){
@@ -156,12 +157,14 @@ router.post("/edicion/:id", validatedEdit, async(req, res) => {
             url: "/img/" + req.file.filename,
             Titulo: req.body.title,
             Description: req.body.description,
-            id_usuario: usuarioEdita.id
+            id_usuario: usuarioEdita.id,
+            updated_at: new Date()
         }, {
             where: {
                 id: req.params.id
             }
         })
+        
     
         await unlink(path.resolve("./src/public" + imagenEncontrada.url))
     
