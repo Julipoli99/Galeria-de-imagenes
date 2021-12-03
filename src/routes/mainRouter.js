@@ -104,6 +104,17 @@ router.get("/subido",  (req, res) => {
         })
 })
 
+router.get("/imagenApi", (req, res) => {
+    db.Imagen.findAll()
+        .then(function(imagenes){
+            res.status(200).json({
+                total: imagenes.length,
+                data: imagenes
+            })
+            
+        })
+})
+
 router.get("/image/:id", (req, res) => {
     db.Imagen.findByPk(req.params.id)
         .then(function(imagen){
@@ -252,6 +263,16 @@ router.post("/login", (req, res) => {
         }
     }
     //FALTA AGREGAR LAS VALIDACIONES DEL BACKEND//
+})
+
+router.get("/userApi", (req, res) => {
+    db.Usuario.findAll()
+        .then(function(usuarios){
+            res.status(200).json({
+                total: usuarios.length,
+                data: usuarios
+            })
+        })
 })
 
 
