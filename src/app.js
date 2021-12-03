@@ -4,7 +4,7 @@ const multer = require("multer");
 const {uuid} = require("uuidv4")
 
 const path = require("path");
-const port = 3000;
+const PORT = process.env.PORT || 3000
 
 const db = require("../database/models");
 const {sequelize, Sequelize} = require("../database/models");
@@ -18,8 +18,8 @@ const {format} = require("timeago.js");
 
 
 //Settings
-app.listen(process.env.PORT || 3000, function(){
-    console.log("SServer running on port: 3000")
+app.listen(PORT, function(){
+    console.log("SServer running on port:", PORT)
 })
 
 app.set("view engine", "ejs");
