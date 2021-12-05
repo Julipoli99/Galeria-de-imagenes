@@ -19,7 +19,7 @@ const {format} = require("timeago.js");
 
 //Settings
 app.listen(PORT, function(){
-    console.log("SServer running on port:", PORT)
+    console.log("Server running on port:", PORT)
 })
 
 app.set("view engine", "ejs");
