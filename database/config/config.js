@@ -3,15 +3,17 @@ module.exports = {
     "username": "251559_juli",
     "password": "julipoli99",
     "database": "julianpolimeni_imagenes_proyecto",
-    "host": "julianpolimeni.alwaysdata.net",
-    "dialect": "mysql"
+    "host": "mysql-julianpolimeni.alwaysdata.net",
+    "dialect": "mysql",
+    "port": 3306
   },
   "test": {
     "username": "251559_juli",
     "password": "julipoli99",
     "database": "julianpolimeni_imagenes_proyecto",
-    "host": "julianpolimeni.alwaysdata.net",
-    "dialect": "mysql"
+    "host": "mysql-julianpolimeni.alwaysdata.net",
+    "dialect": "mysql",
+    "port": 3306
   },
   /*"production": {
     "username": "root",
