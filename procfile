@@ -1,2 +1,2 @@
-web: npm start
-web: npm start
+web: npm start ./src/app.js
+web: npm start ./src/app.js
