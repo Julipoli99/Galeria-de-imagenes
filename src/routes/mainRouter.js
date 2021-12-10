@@ -45,6 +45,11 @@ const validatedEdit = [
 const validatedLogin = [
     body("email").notEmpty().withMessage("ingresa un email").bail().isEmail().withMessage("Debes ingresar un email valido"),
     body("")
+];
+
+const validatedEditUser = [
+    body("nombre").notEmpty().withMessage("Ingresa un nombre"),
+    body("email").notEmpty().withMessage("Ingresa un email").bail().isEmail().withMessage("Debes ingresar un email valido")
 ]
 
 
@@ -136,6 +141,45 @@ router.post("/perfilUsuario/:id/delete", async(req, res) => {
     res.redirect("/")
 })
 
+router.get("/editarUsuario/:id", (req, res) => {
+    db.Usuario.findByPk(req.params.id)
+        .then(function(usuario){
+            res.render("editarUsuario", {usuario})
+        })
+})
+
+router.post("/editarUsuario/:id", validatedEditUser, async(req, res) => {
+
+    let resultsValidations = validationResult(req);
+    
+     if (resultsValidations.errors.length > 0){
+         db.Usuario.findByPk(req.params.id)
+            .then(function(usuario){
+                res.render("editarUsuario", {
+                    errors: resultsValidations.mapped(),
+                    old: req.body,
+                    usuario
+                })
+            })
+    }
+
+    else{
+        await db.Usuario.update({
+            Nombre: req.body.nombre,
+            Email: req.body.email
+        }, {
+            where:{
+                id: req.params.id
+            }
+        })
+
+
+        
+        res.redirect("/")
+    }
+
+    
+})
 
 
 router.get("/subido",  (req, res) => {

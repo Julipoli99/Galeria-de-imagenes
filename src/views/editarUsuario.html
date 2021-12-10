@@ -1,0 +1,46 @@
+<%- include("partials/head.html")%>
+
+<title>Editar usuario</title>
+
+<body class="edicionUsuarioForm">
+    <%- include("partials/navbar.html")%>
+
+    <form action="/editarUsuario/<%=usuario.id%>" method="post" class="formulario">
+    
+        <h1>Editar usuario</h1>
+    
+        <div class="contenedor">
+
+            <% if(locals.errors && errors.nombre) { %>
+                <p class="text-danger"><%=errors.nombre.msg%></p>
+            <% } %>
+    
+            <p id="errorNombreP" style="color: crimson;"></p>
+    
+            <div class="contenedor-input">
+                <i class="fas fa-user icon"></i>
+                <input type="text" name="nombre" id="nombre" placeholder="Introduce tu nombre" value="<%=usuario.Nombre%>"><span id="iconoX"></span>
+            </div>
+    
+            <% if(locals.errors && errors.email) { %>
+                <p class="text-danger"><%=errors.email.msg%></p>
+            <% } %>
+    
+            <p id="errorEmailP" style="color: crimson;"></p>
+            <div class="contenedor-input">
+                <i class="fas fa-envelope icon"></i>
+                <input type="text" name="email" id="email" placeholder="Introduce tu email" value="<%=usuario.Email%>"><span id="iconoX2"></span>
+            </div>
+    
+    
+            
+    
+            <button type="submit" name="" id="boton" class="button">Editar!</button>
+            <div id="volverLink">
+            <a href="/perfilUsuario/<%=usuario.id%>" id="linkVolver">Volver</a>
+            </div>
+    
+        </div>
+    
+    </form>
+</body>

@@ -19,6 +19,12 @@ background: linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(0,212,255,1) 0%, rgba
     margin: 0;
 }
 
+.edicionUsuarioForm{
+    background-image: url("https://wvw.es/wp-content/uploads/2020/07/Opciones-para-descargar-videos-de-Pinterest.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
 .contenedor{
     width: 100%;
     padding: 15px;
@@ -93,6 +99,22 @@ input[type = "password"]{
 }
 
 .link:hover{
+    color: cadetblue;
+}
+
+#volverLink{
+    margin-top: 20px;
+    text-align: center;
+}
+
+#linkVolver{
+    color: #1a2537;
+    font-weight: 600;
+    text-decoration: none;
+    
+}
+
+#linkVolver:hover{
     color: cadetblue;
 }
 
