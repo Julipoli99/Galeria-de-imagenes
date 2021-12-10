@@ -7,7 +7,10 @@
 
     <div id="edicion-eliminacionUsuario">
         <a href="#">Editar Usuario</a>
-        <a href="#" id="eliminarCuenta">Eliminar cuenta</a>
+        <form action="/perfilUsuario/<%=usuario.id%>/delete" method="post">
+            <button id="eliminarCuentaButton" onclick="return confirm('¿Estas seguro de que quieres borrar tu cuenta? Todas tus imagenes se perderán')">Eliminar cuenta</button>
+        </form>
+        
     </div>
     
     <div id="imagenUsuario">

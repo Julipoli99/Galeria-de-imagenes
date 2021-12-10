@@ -127,7 +127,14 @@ input[type = "password"]{
     color: #fff;
 }
 
-#eliminarCuenta:hover{
+#eliminarCuentaButton{
+    border: none;
+    background-color: transparent;
+    color: #fff;
+    margin-right: 15px;
+}
+
+#eliminarCuentaButton:hover{
     color: crimson;
     transition: .3s;
 }

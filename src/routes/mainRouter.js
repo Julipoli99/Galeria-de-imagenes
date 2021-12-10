@@ -106,6 +106,36 @@ router.get("/perfilUsuario/:id", (req, res) => {
         })
 })
 
+router.post("/perfilUsuario/:id/delete", async(req, res) => {
+    
+    let imagenEncontrada = await db.Imagen.findAll({
+        where:{
+            id_usuario: req.params.id
+        }
+    })
+    if(imagenEncontrada.length > 0){
+        for(let i = 0; i < imagenEncontrada.length; i++){
+            await db.Imagen.destroy({
+                where:{
+                    id_usuario: req.params.id
+                }
+            })
+            await unlink(path.resolve("./src/public" + imagenEncontrada[i].url))
+        }
+    }
+    
+
+    await db.Usuario.destroy({
+        where: {
+            id: req.params.id
+        }
+    })
+
+    req.session.destroy()
+    
+    res.redirect("/")
+})
+
 
 
 router.get("/subido",  (req, res) => {
@@ -187,7 +217,7 @@ router.post("/edicion/:id", validatedEdit, async(req, res) => {
                 id: req.params.id
             }
         })
-        
+        //hola//
     
         await unlink(path.resolve("./src/public" + imagenEncontrada.url))
     
