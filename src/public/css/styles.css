@@ -115,3 +115,100 @@ input[type = "password"]{
         display: none;
     }
 }
+
+#edicion-eliminacionUsuario{
+    display: flex;
+    justify-content: end;
+}
+
+#edicion-eliminacionUsuario a{
+    margin-right: 15px;
+    text-decoration: none;
+    color: #fff;
+}
+
+#eliminarCuenta:hover{
+    color: crimson;
+    transition: .3s;
+}
+
+#articulosPublicados{
+    color: #fff;
+    text-align: center;
+    margin-top: 60px;
+}
+
+
+#imagenUsuario {
+    text-align: center;
+}
+
+#imagenUsuario h1{
+    color: #fff;
+}
+
+.container{
+    margin-top: 5%;
+}
+
+.img-text{
+    width: 100%;
+    height: 300px;
+    display: block;
+    text-align: center;
+    padding: 50% 5%;
+    background: #262626;
+    color:#fff;
+    border-radius: 15px;
+    
+}
+
+.img-text h2{
+    font-size: 25px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+
+.img-text p{
+    font-size: 14px;
+}
+
+
+
+.single-box{
+    position: relative;
+    margin-bottom: 30px;
+}
+
+.img-area{
+    position: absolute;
+    width: 200px;
+    height: 130px;
+    border: 5px solid #fff;
+    overflow: hidden;
+    top: 15px;
+    left: 80px;
+    
+}
+
+.img-area img{
+    width: 100%;
+    height: 120px;
+}
+
+.carousel-indicators{
+    left: 0;
+    top: auto;
+    bottom: -70px;
+}
+
+.carousel-indicators li{
+    background: #fff;
+    border-radius: 50%;
+    width: 15px;
+    height: 15px;
+}
+
+.carousel-indicators .active{
+    background: #fff;
+}

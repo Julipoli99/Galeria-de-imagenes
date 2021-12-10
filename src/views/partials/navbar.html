@@ -24,7 +24,7 @@
               Hola <%=locals.usuarioLogueado.Nombre%>
             </button>
             <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-              <a class="dropdown-item" href="#">Ver perfil</a>
+              <a class="dropdown-item" href="/perfilUsuario/<%=locals.usuarioLogueado.id%>">Ver perfil</a>
               <a class="dropdown-item" href="/logout">Cerrar Sesión</a>
             </div>
           </div>

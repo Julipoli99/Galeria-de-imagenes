@@ -95,6 +95,18 @@ else{
 })
 
 
+router.get("/perfilUsuario/:id", (req, res) => {
+    let pedidoImagen = db.Imagen.findAll()
+    let pedidoUsuario = db.Usuario.findByPk(req.params.id, {
+        include: [{association: "imagenes"}]
+    })
+    Promise.all([pedidoImagen, pedidoUsuario])
+        .then(function([imagen, usuario]){
+            res.render("perfilUsuario", {imagen, usuario})
+        })
+})
+
+
 
 router.get("/subido",  (req, res) => {
 
