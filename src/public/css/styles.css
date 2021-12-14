@@ -172,6 +172,11 @@ input[type = "password"]{
     text-align: center;
 }
 
+#imagenUsuario img{
+    border-radius: 30%;
+    width: 180px;
+}
+
 #imagenUsuario h1{
     color: #fff;
 }

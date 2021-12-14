@@ -18,6 +18,10 @@ module.exports = (sequelize, dataTypes) => {
         Password: {
             type: dataTypes.STRING(500),
             notNull: true
+        },
+        foto_perfil: {
+            type: dataTypes.STRING(500),
+            notNull: true
         }
     }
 

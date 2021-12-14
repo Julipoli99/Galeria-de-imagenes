@@ -5,7 +5,7 @@
 <body class="registro">
     <%- include("partials/navbar.html")%>
 
-    <form action="/registro" method="post" class="formulario">
+    <form action="/registro" method="post" class="formulario" enctype="multipart/form-data">
 
         <h1>Registrate</h1>
 
@@ -32,6 +32,12 @@
             <div class="contenedor-input">
                 <i class="fas fa-key icon"></i>
                 <input type="password" name="password" id="password" placeholder="Introduce una contraseña"><span id="iconoX3"></span>
+            </div>
+
+            <p style="text-align: start;">Foto de perfil:</p>
+            <div class="contenedor-input">
+                <i class="fas fa-image icon"></i>
+                <input type="file" name="imagen" id="imagen" style="border: none;"><span id="iconoX3"></span>
             </div>
 
             

@@ -1,7 +1,7 @@
 const express = require("express");
 const app = express();
 const multer = require("multer");
-const {uuid} = require("uuidv4")
+//const {uuid} = require("uuidv4");
 
 const path = require("path");
 const PORT = process.env.PORT || 3000
@@ -55,7 +55,7 @@ app.use((req, res, next) => {
 
 
 // Middlewares
-const storage = multer.diskStorage({
+/*const storage = multer.diskStorage({
     destination: path.join(__dirname, "public/img"),
     filename: (req, file, cb) => {
         cb(null, uuid() + path.extname(file.originalname));
@@ -78,7 +78,7 @@ app.use(multer({
             cb("Error: El archivo debe ser una imagen valida")
         }
     }
-}).single("image"))
+}).single("image"))*/
 
 
 

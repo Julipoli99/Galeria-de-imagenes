@@ -14,8 +14,13 @@
     </div>
     
     <div id="imagenUsuario">
-        
-        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT_woqyfgvQ0HJ1inTc51DfdeOVmC7M0ekinCXqlh4Ck0kjJKEsu7oVMLR2hPJb8jANn1M&usqp=CAU" alt="">
+        <% if(usuario.foto_perfil == "Sin foto de perfil") { %>
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT_woqyfgvQ0HJ1inTc51DfdeOVmC7M0ekinCXqlh4Ck0kjJKEsu7oVMLR2hPJb8jANn1M&usqp=CAU">
+        <% } else { %>
+
+        <img src="<%=usuario.foto_perfil%>" alt="">
+
+        <% } %>
         
        
             <h1><%=usuario.Nombre%></h1>
@@ -31,97 +36,33 @@
     
     
     <div class="container">
-        <div class="row">
-            <div class="col-md-12">
-                <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
-                    <ol class="carousel-indicators">
-                        <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
-                        <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
-                      </ol>
-                      <div class="carousel-inner">
-                        <div class="carousel-item active">
-                            <div class="row">
-                                <% for(let i = 0; i < imagen.length; i++) { %>
-                                    <% if(usuario.id === imagen[i].id_usuario) { %>
-                                <div class="col-md-4">
-                                    <div class="single-box">
-                                        <div class="img-area"><img src="<%=imagen[i].url%>" alt="">
-                                        </div>
-                                        <div class="img-text">
-                                            <h2><%=imagen[i].Titulo%></h2>
-                                            <p><%=imagen[i].Description%></p>
-                                        </div>
-                                    </div>
-                                </div>
-                                    <% } %>
-                                <% } %>
-                                
-
-                                <!-- <div class="col-md-4">
-                                    <div class="single-box">
-                                        <div class="img-area"><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT_woqyfgvQ0HJ1inTc51DfdeOVmC7M0ekinCXqlh4Ck0kjJKEsu7oVMLR2hPJb8jANn1M&usqp=CAU" alt="">
-                                        </div>
-                                        <div class="img-text">
-                                            <h2>imagen 2</h2>
-                                            <p>Info de la imagen</p>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="col-md-4">
-                                    <div class="single-box">
-                                        <div class="img-area"><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT_woqyfgvQ0HJ1inTc51DfdeOVmC7M0ekinCXqlh4Ck0kjJKEsu7oVMLR2hPJb8jANn1M&usqp=CAU" alt="">
-                                        </div>
-                                        <div class="img-text">
-                                            <h2>imagen 3</h2>
-                                            <p>Info de la imagen</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            -->
-                            </div>
-                        </div>
-
-                        <div class="carousel-item">
-                            <div class="row">
-                                <div class="col-md-4">
-                                    <div class="single-box">
-                                        <div class="img-area"><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT_woqyfgvQ0HJ1inTc51DfdeOVmC7M0ekinCXqlh4Ck0kjJKEsu7oVMLR2hPJb8jANn1M&usqp=CAU" alt="">
-                                        </div>
-                                        <div class="img-text">
-                                            <h2>imagen 4</h2>
-                                            <p>Info de la imagen</p>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="col-md-4">
-                                    <div class="single-box">
-                                        <div class="img-area"><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT_woqyfgvQ0HJ1inTc51DfdeOVmC7M0ekinCXqlh4Ck0kjJKEsu7oVMLR2hPJb8jANn1M&usqp=CAU" alt="">
-                                        </div>
-                                        <div class="img-text">
-                                            <h2>imagen 5</h2>
-                                            <p>Info de la imagen</p>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="col-md-4">
-                                    <div class="single-box">
-                                        <div class="img-area"><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT_woqyfgvQ0HJ1inTc51DfdeOVmC7M0ekinCXqlh4Ck0kjJKEsu7oVMLR2hPJb8jANn1M&usqp=CAU" alt="">
-                                        </div>
-                                        <div class="img-text">
-                                            <h2>imagen 6</h2>
-                                            <p>Info de la imagen</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                      </div>
-                </div>
+      
+        <div class="row justify-content-center">
+          <% for(let i = 0; i < imagen.length; i++) { %>
+            <% if(usuario.id === imagen[i].id_usuario) { %>
+              
+          
+          <div class="col-md-4">
+           
+            <div class="card" style="width: 18rem;">
+              <img src="<%=imagen[i].url%>" class="card-img-top" alt="...">
+              <div class="card-body">
+                <h5 class="card-title"><%=imagen[i].Titulo%></h5>
+                <p class="card-text"><%=imagen[i].Description%></p>
+                <a href="/image/<%=imagen[i].id%>" class="btn btn-success">Ir al detalle de imagen</a>
+              </div>
             </div>
+            
+          </div>
+          
+             
+          <% } %>
+            <% } %>
+
         </div>
+        
         
     </div>
 </body>
+
+<!---->

@@ -1,3 +1,5 @@
+const express = require("express");
+const routerApp = express();
 const {Router} = require("express");
 const router = Router();
 const db = require("../../database/models");
@@ -6,9 +8,65 @@ const op = Sequelize.Op;
 const path = require("path");
 const {unlink} = require("fs-extra");
 const { nextTick } = require("process");
-const {body, validationResult} = require("express-validator");
+const {body, validationResult, check} = require("express-validator");
 const bcryptjs = require("bcryptjs");
+const multer = require("multer");
+const {uuid} = require("uuidv4")
 
+
+//MULTER MIDDLEWARE PARA FOTO DE PERFIL DE USUARIO EN LA CARPETA FOTOPERFIL
+
+let configuracionImagenFotoPerfil = multer.diskStorage({
+    destination: path.join(__dirname, "../public/img/fotoPerfil"),
+    filename: (req, file, cb) => {
+        cb(null, uuid() + path.extname(file.originalname));
+    }
+});
+
+let multerFotoPerfil = multer({
+    storage: configuracionImagenFotoPerfil,
+    dest: path.join(__dirname, "../public/img/fotoPerfil"),
+    limits: {fileSize: 3000000},
+    fileFilter: (req, file, cb) => {
+        const fileType = /jpeg|jpg|png|gif/;
+        const mimeType = fileType.test(file.mimetype);
+        const extName = fileType.test(path.extname(file.originalname));
+
+        if(mimeType && extName){
+            return cb(null, true)
+        }
+        else {
+            cb("Error: El archivo debe ser una imagen valida")
+        }
+    }
+})
+
+//MULTER MIDDLEWARE PARA FOTO DE IMAGEN EN LA CARPETA IMG
+
+let configuracionImagenFotoImg = multer.diskStorage({
+    destination: path.join(__dirname, "../public/img"),
+    filename: (req, file, cb) => {
+        cb(null, uuid() + path.extname(file.originalname));
+    }
+});
+
+let multerFotoImg = multer({
+    storage: configuracionImagenFotoImg,
+    dest: path.join(__dirname, "../public/img"),
+    limits: {fileSize: 3000000},
+    fileFilter: (req, file, cb) => {
+        const fileType = /jpeg|jpg|png|gif/;
+        const mimeType = fileType.test(file.mimetype);
+        const extName = fileType.test(path.extname(file.originalname));
+
+        if(mimeType && extName){
+            return cb(null, true)
+        }
+        else {
+            cb("Error: El archivo debe ser una imagen valida")
+        }
+    }
+})
 
 //VALIDATIONS//
 
@@ -49,7 +107,8 @@ const validatedLogin = [
 
 const validatedEditUser = [
     body("nombre").notEmpty().withMessage("Ingresa un nombre"),
-    body("email").notEmpty().withMessage("Ingresa un email").bail().isEmail().withMessage("Debes ingresar un email valido")
+    body("email").notEmpty().withMessage("Ingresa un email").bail().isEmail().withMessage("Debes ingresar un email valido"),
+    check("imagen").optional({nullable: true, checkFalsy:true})
 ]
 
 
@@ -61,7 +120,7 @@ router.get("/", (req, res) => {
 
 
 
-router.post("/", validatedSubmit, async(req, res) => {
+router.post("/", validatedSubmit, multerFotoImg.single("image"),async(req, res) => {
     let resultsValidations = validationResult(req);
     if (resultsValidations.errors.length > 0){
         return res.render("home", {
@@ -112,6 +171,8 @@ router.get("/perfilUsuario/:id", (req, res) => {
 })
 
 router.post("/perfilUsuario/:id/delete", async(req, res) => {
+
+    let usuarioImagenEncontrado = await db.Usuario.findByPk(req.params.id)
     
     let imagenEncontrada = await db.Imagen.findAll({
         where:{
@@ -130,11 +191,17 @@ router.post("/perfilUsuario/:id/delete", async(req, res) => {
     }
     
 
+    
+
     await db.Usuario.destroy({
         where: {
             id: req.params.id
         }
     })
+
+    await unlink(path.resolve("./src/public" + usuarioImagenEncontrado.foto_perfil))
+
+    
 
     req.session.destroy()
     
@@ -148,7 +215,7 @@ router.get("/editarUsuario/:id", (req, res) => {
         })
 })
 
-router.post("/editarUsuario/:id", validatedEditUser, async(req, res) => {
+router.post("/editarUsuario/:id", multerFotoPerfil.single("imagen"), validatedEditUser,  async(req, res) => {
 
     let resultsValidations = validationResult(req);
     
@@ -164,16 +231,35 @@ router.post("/editarUsuario/:id", validatedEditUser, async(req, res) => {
     }
 
     else{
-        await db.Usuario.update({
-            Nombre: req.body.nombre,
-            Email: req.body.email
-        }, {
-            where:{
-                id: req.params.id
+        let imagenEncontradaEdicion = await db.Usuario.findByPk(req.params.id);
+
+        function siExisteONo(){
+            if(req.file){
+                return "/img/fotoPerfil/" + req.file.filename
             }
-        })
+            else{
+                return imagenEncontradaEdicion.foto_perfil
+            }
+        }
 
+        //"/img/fotoPerfil/" + req.file.filename
 
+        
+            await db.Usuario.update({
+                Nombre: req.body.nombre,
+                Email: req.body.email,
+                foto_perfil: siExisteONo()
+            }, {
+                where:{
+                    id: req.params.id
+                }
+            })
+    
+    
+        if(req.file){
+            await unlink(path.resolve("./src/public" + imagenEncontradaEdicion.foto_perfil))
+        }
+        
         
         res.redirect("/")
     }
@@ -275,19 +361,36 @@ router.get("/registro", (req, res) => {
     res.render("registro")
 })
 
-router.post("/registro", (req, res) => {
+router.post("/registro", multerFotoPerfil.single("imagen"), (req, res) => {
+    console.log(req.file)
 
+    
+    function siHayFotoONo(){
+        if(req.file){
+            return "/img/fotoPerfil" + req.file.filename
+        }
+        else{
+            return "Sin foto de perfil"
+        }
+    }
+    
     let encriptedPass = bcryptjs.hashSync(req.body.password, 10);
    
     let NewUser =   {
         Nombre: req.body.nombre,
         Email: req.body.email,
-        Password: encriptedPass
+        Password: encriptedPass,
+        foto_perfil: siHayFotoONo()
     }
+
+    
 
     db.Usuario.create(NewUser);
 
     res.redirect("/login")
+    console.log(path.join(__dirname))
+    
+    
     
 })
 
